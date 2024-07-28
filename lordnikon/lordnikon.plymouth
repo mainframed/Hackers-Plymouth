@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=LordNikon
+Description=What, your mom bought you a 'puter for christmas?
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/lordnikon
+ScriptFile=/usr/share/plymouth/themes/lordnikon/lordnikon.script

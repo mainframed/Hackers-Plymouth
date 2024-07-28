@@ -1,0 +1,138 @@
+// Set top and bottom color to white
+Window.SetBackgroundTopColor (0,0,0);
+Window.SetBackgroundBottomColor (0,0,0);
+
+
+// Screen size
+screen.w = Window.GetWidth();
+screen.h = Window.GetHeight();
+screen.half.w = Window.GetWidth() / 2;
+screen.half.h = Window.GetHeight() / 2;
+
+// Question prompt
+question = null;
+answer = null;
+
+// Message
+message = null;
+
+// Password prompt
+bullets = null;
+prompt = null;
+bullet.image = Image.Text("*", 1, 1, 1);
+
+// Flow
+state.status = "play";
+state.time = 0.0;
+
+// Image counts
+boot = 37;
+
+// How many frames per image
+speed = 1;
+
+//--------------------------------- Display images --------------------------
+
+// Display a list of images while booting
+for (i = 1; i <= boot; i++)
+{
+ # Full screen images are just too slow even on a powerfull machine
+ #boot_image = Image("boot-" + i + ".png");
+ #flyingman_image[i] = boot_image.Scale(screen.w,screen.h);
+
+ flyingman_image[i] = Image("boot-" + i + ".png");
+}
+flyingman_sprite = Sprite();
+
+
+// set image position
+flyingman_sprite.SetX(screen.half.w - (flyingman_image[1].GetWidth() / 2)); # Place images in the center
+flyingman_sprite.SetY(screen.half.h - (flyingman_image[1].GetHeight() / 2));
+#flyingman_sprite.SetX(0); # Place images top left
+#flyingman_sprite.SetY(0);
+
+boot_progress = 0;
+bootprogressmsg.sprite = Sprite();
+
+fun refresh_callback () {
+  if (Plymouth.GetMode() == "boot" || Plymouth.GetMode() == "resume" || Plymouth.GetMode() == "updates" || Plymouth.GetMode() == "system-upgrade" || Plymouth.GetMode() == "firmware-upgrade") {
+   #  progress.image = Image.Text("boot_progress : " + boot_progress + "\nNumber : " + (boot_progress % boot)+"\nLocation : "+ Math.Int(boot_progress/2)], 0, 0, 0, 1, "droidsansmono", "left");
+   #  bootprogressmsg.sprite.SetImage(progress.image);
+   #  bootprogressmsg.sprite.SetX(1000);
+   #  bootprogressmsg.sprite.SetY(600);
+   #  bootprogressmsg.sprite.SetOpacity(1.0);
+
+    if(boot_progress > (37*speed))
+      boot_progress = 27*speed;
+  
+    flyingman_sprite.SetImage(flyingman_image[Math.Int(boot_progress/speed)]);
+
+    boot_progress++;
+  }
+}
+
+Plymouth.SetRefreshFunction (refresh_callback);
+
+
+//-------------------------------- Password prompt -------------------------------
+fun DisplayQuestionCallback(prompt, entry) {
+  question = null;
+  answer = null;
+
+  if (entry == "")
+      entry = "<answer>";
+
+  question.image = Image.Text(prompt, 1, 0, 0);
+  question.sprite = Sprite(question.image);
+  question.sprite.SetX(screen.half.w - question.image.GetWidth() / 2);
+  question.sprite.SetY(screen.h - 4 * question.image.GetHeight());
+
+  answer.image = Image.Text(entry, 0, 0, 0);
+  answer.sprite = Sprite(answer.image);
+  answer.sprite.SetX(screen.half.w - answer.image.GetWidth() / 2);
+  answer.sprite.SetY(screen.h - 2 * answer.image.GetHeight());
+}
+Plymouth.SetDisplayQuestionFunction(DisplayQuestionCallback);
+
+
+//-------------------------------- Password prompt -------------------------------
+fun DisplayPasswordCallback(nil, bulletCount) {
+  state.status = "pause";
+  totalWidth = bulletCount * bullet.image.GetWidth();
+  startPos = screen.half.w - totalWidth / 2;
+
+  prompt.image = Image.Text("Enter Password", 0, 0, 0);
+  prompt.sprite = Sprite(prompt.image);
+  prompt.sprite.SetX(screen.half.w - prompt.image.GetWidth() / 2);
+  prompt.sprite.SetY(screen.h - 4 * prompt.image.GetHeight());
+
+  // Clear all bullets (user might hit backspace)
+  bullets = null;
+  for (i = 0; i < bulletCount; i++) {
+      bullets[i].sprite = Sprite(bullet.image);
+      bullets[i].sprite.SetX(startPos + i * bullet.image.GetWidth());
+      bullets[i].sprite.SetY(screen.h - 2 * bullet.image.GetHeight());
+  }
+}
+Plymouth.SetDisplayPasswordFunction(DisplayPasswordCallback);
+
+
+//------------------------- Normal display (unset all text) ----------------------
+fun DisplayNormalCallback() {
+    state.status = "play";
+    bullets = null;
+    prompt = null;
+    message = null;
+    question = null;
+    answer = null;
+}
+Plymouth.SetDisplayNormalFunction(DisplayNormalCallback);
+
+
+//---------------------------------- Message --------------------------------
+fun MessageCallback(text) {
+    message.image = Image.Text(text, 1, 0, 0);
+    message.sprite = Sprite(message.image);
+    message.sprite.SetPosition(screen.half.w - message.image.GetWidth() / 2, message.image.GetHeight());
+}
+Plymouth.SetMessageFunction(MessageCallback);

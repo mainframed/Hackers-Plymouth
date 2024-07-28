@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=CerealKiller
+Description=Of all the things I've lost, I miss my mind the most.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/cerealkiller
+ScriptFile=/usr/share/plymouth/themes/cerealkiller/cerealkiller.script

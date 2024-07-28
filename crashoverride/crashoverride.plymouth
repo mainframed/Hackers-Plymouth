@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=CrashOverride
+Description=Mess with the best, die like the rest
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/crashoverride
+ScriptFile=/usr/share/plymouth/themes/crashoverride/crashoverride.script
