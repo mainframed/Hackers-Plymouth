@@ -24,8 +24,8 @@ these scenes were, they weren't accurate to the movie.
 Luckily, someone else decided they *also* wanted to create more accurate
 boot screens from the movie based on [this scene](https://www.youtube.com/watch?v=qiQlZU5oWTQ 
 
-I took those videos and with FFMPEG and pngquant converted th 
-em to PNGs and wrote Plymouth scripts to use that as boot screens. 
+I took those videos and with FFMPEG and pngquant converted them to 
+PNGs and wrote Plymouth scripts to use that as boot screens. 
 
 ### CrashOverride
 

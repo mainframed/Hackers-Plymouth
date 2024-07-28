@@ -28,10 +28,10 @@ state.time = 0.0;
 //--------------------------------- Display Resolution --------------------------
 
 bootprogressmsg.sprite = Sprite();
-progress.image = Image.Text("Regenerate with this resolution:\n\n"+screen.h, 1, 0, 0, 1, "droidsansmono 72", "left");
+progress.image = Image.Text("Regenerate with this resolution:\n\n"+screen.h, 1, 0, 0, 1, "droidsansmono 24", "left");
 bootprogressmsg.sprite.SetImage(progress.image);
 bootprogressmsg.sprite.SetX(400);
-bootprogressmsg.sprite.SetY(600);
+bootprogressmsg.sprite.SetY(300);
 bootprogressmsg.sprite.SetOpacity(1.0);
 
 
