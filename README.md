@@ -1,3 +1,4 @@
+```
     ▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ 
   ▄█░░░░▌    ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
  ▐░░▌▐░░▌    ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ 
@@ -9,6 +10,7 @@
  ▄▄▄▄█░░█▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄▄▄▄▄█░▌
 ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ 
+```
                                                     
 Nikon:  I want it.
 Phreak: I want it to have my children!
@@ -103,6 +105,53 @@ change `speed=1` to `speed=2`, or `speed=3`, etc. This determines how many frame
 to linger on a frame.
 
 
+## Help my computer boots too fast!
 
+Your computer boots too fast and you don't get to see the whole animation
+or at all! We can fix that with a script and a service:
 
+Firstly copy the script below, place it in `~/.wait.sh` and make is executable
+`chmod +x ~/.wait.sh`
 
+```bash
+#!/usr/bin/env bash
+# From: https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
+
+x=1
+
+while [ $x -le 1 ]
+
+do
+
+        echo "Sleeping" | tee -a  /home/$USER/SweetDreams.log
+
+        # ADJUST THIS NUMBER TO SHORTER OR LONGER
+        sleep 5
+
+        echo "Waking" | tee -a  /home/$USER/SweetDreams.log
+
+        x=$(( $x + 1 ))
+
+done
+```
+
+Now create a custom systemd service: `sudo nano /etc/systemd/system/SweetDreams.service`
+
+and copy/paste the below in to nano :warning: make sure you change the `USERNAME` on the ExecStart
+line to the location of the `.wait.sh` script:
+
+```
+[Unit]
+Description=Sweet Dreams
+Before=gdm.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/USERNAME/.wait.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then you can test it with `sudo systemctl start SweetDreams` and enable it 
+`sudo systemctl enable SweetDreams`. 
