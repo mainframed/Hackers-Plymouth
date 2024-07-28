@@ -3,6 +3,11 @@
 every_n_frame="1"
 resolution="1800"  # Default resolution
 
+if [ -n "$2" ] 
+then
+    resolution=$2
+fi
+
 #set -x
 set -e
 
