@@ -11,18 +11,18 @@
 ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ 
 ```
-                                                    
-Nikon:  I want it.
-Phreak: I want it to have my children!
-Cereal: Yeah, I bet it looks crispy in the dark.
-Phreak: Yo hit the lights!
 
-This project started as an attempt to complete the work started 
-[here](https://github.com/germ/HACKERS-1995-BOOTSPLASH), as interesting as
+> Nikon:  I want it.<br>
+> Phreak: I want it to have my children!<br>
+> Cereal: Yeah, I bet it looks crispy in the dark.<br>
+> Phreak: Yo hit the lights!
+
+This project started as an attempt to complete the work started in
+[germ/HACKERS-1995-BOOTSPLASH](https://github.com/germ/HACKERS-1995-BOOTSPLASH), as interesting as
 these scenes were, they weren't accurate to the movie.
 
 Luckily, someone else decided they *also* wanted to create more accurate
-boot screens from the movie based on [this scene](https://www.youtube.com/watch?v=qiQlZU5oWTQ 
+boot screens from the movie based on [this scene](https://www.youtube.com/watch?v=qiQlZU5oWTQ).
 
 I took those videos and with FFMPEG and pngquant converted them to 
 PNGs and wrote Plymouth scripts to use that as boot screens. 
@@ -118,20 +118,13 @@ Firstly copy the script below, place it in `~/.wait.sh` and make is executable
 # From: https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
 
 x=1
-
 while [ $x -le 1 ]
-
 do
-
         echo "Sleeping" | tee -a  /home/$USER/SweetDreams.log
-
         # ADJUST THIS NUMBER TO SHORTER OR LONGER
         sleep 5
-
         echo "Waking" | tee -a  /home/$USER/SweetDreams.log
-
         x=$(( $x + 1 ))
-
 done
 ```
 
@@ -140,7 +133,7 @@ Now create a custom systemd service: `sudo nano /etc/systemd/system/SweetDreams.
 and copy/paste the below in to nano :warning: make sure you change the `USERNAME` on the ExecStart
 line to the location of the `.wait.sh` script:
 
-```
+```desktop
 [Unit]
 Description=Sweet Dreams
 Before=gdm.service
